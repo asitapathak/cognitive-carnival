@@ -18,41 +18,42 @@ page = st.sidebar.radio(
      "Angle 3: The Elite Bottleneck (Classification)",
      "The Interactive Biological Engine (All Angles)")
 )
+# --- GLOBAL CSS OVERRIDE (APPLIES TO ALL PAGES) ---
+st.markdown(
+    """
+    <style>
+    .stApp {
+        /* Direct link to a dotted neural network brain image */
+        background-image: url("https://images.unsplash.com/photo-1559757175-5700dde675bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    .stApp::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        /* 90% dark overlay leaves exactly 10% opacity for the background image */
+        background-color: rgba(14, 17, 23, 0.90); 
+        z-index: -1;
+    }
+    /* Custom slide container styling */
+    .slide-container {
+        background-color: rgba(30, 34, 43, 0.6);
+        padding: 40px;
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 20px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 # --- 3. PAGE: THE GRAND SYNTHESIS ---
+# --- 3. PAGE: WELCOME & OVERVIEW ---
 if page == "Welcome & Overview":
-    # 1. CSS Injection for the Faded Brain Watermark Background
-    st.markdown(
-        """
-        <style>
-        .stApp {
-            /* Using a high-quality abstract neural network image */
-            background-image: url("https://stock.adobe.com/search?k=brain+dot");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        .stApp::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            /* This dark overlay fades the image so text remains readable (92% dark) */
-            background-color: rgba(14, 17, 23, 0.92); 
-            z-index: -1;
-        }
-        /* Custom slide container styling */
-        .slide-container {
-            background-color: rgba(30, 34, 43, 0.6);
-            padding: 40px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 20px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # 2. Session State for the Slider Pages
+    
+    # 1. Session State for the Slider Pages
     if "slide_index" not in st.session_state:
         st.session_state.slide_index = 0
 
@@ -64,81 +65,79 @@ if page == "Welcome & Overview":
         if st.session_state.slide_index > 0:
             st.session_state.slide_index -= 1
 
-    # 3. Slide Content
-    st.markdown('<div class="slide-container">', unsafe_allow_html=True)
-
+    # 2. Slide Content (Headers are now strictly inside the boxes)
     if st.session_state.slide_index == 0:
-        st.markdown("<h1 style='text-align: center; color: #4DA8DA;'>Welcome to the Cognitive Carnival</h1>", unsafe_allow_html=True)
-        st.markdown("### ")
         st.markdown("""
-        <div style='font-size: 20px; line-height: 1.6; text-align: center;'>
-        Intelligence isn't just about how well you score on a test. It is a biological engine driven by your daily habits, your emotional state, and your environment. <br><br>
-        This interactive data science dashboard explores a critical question: <b>How do factors like toxic sleep, emotional awareness, environmental stress, and the brain's raw capacity to retain and manipulate active information physically dictate our logical computing power?</b><br><br>
-        <i>Click <b>Next</b> to see how we decoded the human brain.</i>
+        <div class="slide-container">
+            <h1 style='text-align: center; color: #4DA8DA; margin-bottom: 20px;'>Welcome to the Cognitive Carnival</h1>
+            <div style='font-size: 20px; line-height: 1.6; text-align: center;'>
+            Intelligence isn't just about how well you score on a test. It is a biological engine driven by your daily habits, your emotional state, and your environment. <br><br>
+            This interactive data science dashboard explores a critical question: <b>How do factors like toxic sleep, emotional awareness, environmental stress, and the brain's raw capacity to retain and manipulate active information physically dictate our logical computing power?</b><br><br>
+            <i>Click <b>Next</b> to see how we decoded the human brain.</i>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
     elif st.session_state.slide_index == 1:
-        st.markdown("<h2 style='color: #4DA8DA;'>Where Did the Data Come From?</h2>", unsafe_allow_html=True)
-        st.markdown("---")
         st.markdown("""
-        <div style='font-size: 18px; line-height: 1.6;'>
-        This project strictly utilizes data from the <b>Human Connectome Project (HCP) 1200 Subjects Release</b>, a major neuroscience initiative funded by the National Institutes of Health (NIH). <br><br>
-        The HCP's core objective was to construct a comprehensive map of human brain circuitry and its relationship to behavior. The metrics used in this dashboard are not self-reported guesses; they are rigorous, standardized clinical assessments (utilizing the NIH Toolbox) that measure exact cognitive output, psychological well-being, and biological maintenance in healthy adults.
+        <div class="slide-container">
+            <h2 style='color: #4DA8DA;'>Where Did the Data Come From?</h2>
+            <hr style="border-color: rgba(255,255,255,0.1);">
+            <div style='font-size: 18px; line-height: 1.6;'>
+            This project strictly utilizes data from the <b>Human Connectome Project (HCP) 1200 Subjects Release</b>, a major neuroscience initiative funded by the National Institutes of Health (NIH). <br><br>
+            The HCP's core objective was to construct a comprehensive map of human brain circuitry and its relationship to behavior. The metrics used in this dashboard are not self-reported guesses; they are rigorous, standardized clinical assessments (utilizing the NIH Toolbox) that measure exact cognitive output, psychological well-being, and biological maintenance in healthy adults.
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
     elif st.session_state.slide_index == 2:
-        st.markdown("<h2 style='color: #4DA8DA;'>Translating the Science</h2>", unsafe_allow_html=True)
-        st.markdown("---")
         st.markdown("""
-        <div style='font-size: 18px; line-height: 1.8;'>
-        Before we analyze the brain, here is exactly what our scientific variables mean in plain English:<br><br>
-         <b style='color: #A2D5F2;'>Fluid Intelligence (PMAT24):</b> The ultimate logic and problem-solving score. This is the "brain power" we are trying to predict.<br>
-         <b style='color: #FF6B6B;'>The Sleep Penalty (PSQI):</b> A measure of sleep deprivation. A high score indicates toxic, poor-quality sleep.<br>
-         <b style='color: #FF8E8B;'>Emotional Intelligence (ER40):</b> The subject's ability to accurately read and process human emotions.<br>
-         <b style='color: #A2D5F2;'>Working Memory (PicSeq):</b> The brain's raw hardware capacity to store and recall visual information.<br>
-         <b style='color: #A2D5F2;'>Pure Focus (Flanker):</b> The biological ability to maintain strict attention and ignore outside distractions.<br>
-         <b style='color: #6BCB77;'>Stress-Free Metric (LifeSatisf):</b> Overall life satisfaction, used as a baseline indicator of a low-stress, low-cortisol environment.
+        <div class="slide-container">
+            <h2 style='color: #4DA8DA;'>Translating the Science</h2>
+            <hr style="border-color: rgba(255,255,255,0.1);">
+            <div style='font-size: 18px; line-height: 1.8;'>
+            Before we analyze the brain, here is exactly what our scientific variables mean in plain English:<br><br>
+             🧠 <b style='color: #A2D5F2;'>Fluid Intelligence (PMAT24):</b> The ultimate logic and problem-solving score. This is the "brain power" we are trying to predict.<br>
+             💤 <b style='color: #FF6B6B;'>The Sleep Penalty (PSQI):</b> A measure of sleep deprivation. A high score indicates toxic, poor-quality sleep.<br>
+             ❤️ <b style='color: #FF8E8B;'>Emotional Intelligence (ER40):</b> The subject's ability to accurately read and process human emotions.<br>
+             💾 <b style='color: #A2D5F2;'>Working Memory (PicSeq):</b> The brain's raw hardware capacity to store and recall visual information.<br>
+             🎯 <b style='color: #A2D5F2;'>Pure Focus (Flanker):</b> The biological ability to maintain strict attention and ignore outside distractions.<br>
+             🧘 <b style='color: #6BCB77;'>Stress-Free Metric (LifeSatisf):</b> Overall life satisfaction, used as a baseline indicator of a low-stress, low-cortisol environment.
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
     elif st.session_state.slide_index == 3:
-        st.markdown("<h2 style='color: #4DA8DA;'>How We Decoded the Data</h2>", unsafe_allow_html=True)
-        st.markdown("---")
         st.markdown("""
-        <div style='font-size: 18px; line-height: 1.6;'>
-        This project uses three distinct machine learning algorithms to uncover different layers of human performance:<br><br>
-        <b>1. Finding the Baseline</b> <i><span style='color: #888;'>(Multiple Linear Regression)</span></i>: We first looked at the entire population to find out which biological traits drive our average, everyday problem-solving skills.<br><br>
-        <b>2. Discovering Hidden Tribes</b> <i><span style='color: #888;'>(K-Means Clustering)</span></i>: We used an unsupervised algorithm to group subjects based purely on their biological similarities. This revealed a fascinating "Burnout Override" group.<br><br>
-        <b>3. Sorting the Elite</b> <i><span style='color: #888;'>(Random Forest Classification)</span></i>: Finally, we isolated the top 20% of the smartest individuals to figure out the exact biological bottleneck required to reach genius-level logic.
+        <div class="slide-container">
+            <h2 style='color: #4DA8DA;'>How We Decoded the Data</h2>
+            <hr style="border-color: rgba(255,255,255,0.1);">
+            <div style='font-size: 18px; line-height: 1.6;'>
+            This project uses three distinct machine learning algorithms to uncover different layers of human performance:<br><br>
+            <b>1. Finding the Baseline</b> <i><span style='color: #888;'>(Multiple Linear Regression)</span></i>: We first looked at the entire population to find out which biological traits drive our average, everyday problem-solving skills.<br><br>
+            <b>2. Discovering Hidden Tribes</b> <i><span style='color: #888;'>(K-Means Clustering)</span></i>: We used an unsupervised algorithm to group subjects based purely on their biological similarities. This revealed a fascinating "Burnout Override" group.<br><br>
+            <b>3. Sorting the Elite</b> <i><span style='color: #888;'>(Random Forest Classification)</span></i>: Finally, we isolated the top 20% of the smartest individuals to figure out the exact biological bottleneck required to reach genius-level logic.
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
     elif st.session_state.slide_index == 4:
-        st.markdown("<h2 style='text-align: center; color: #4DA8DA;'>About the Researcher</h2>", unsafe_allow_html=True)
-        st.markdown("---")
-        
-        # Centering the image and text
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            # Replace 'your_picture.jpg' with the actual filename of your profile picture if it's in your repository
-            # OR replace the string with a direct URL to your LinkedIn profile picture
-            st.image("https://www.linkedin.com/in/asita-pathak-a59318209/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3B4gLscUCNR5Oi730QEMlLgw%3D%3D", width=150, use_column_width=False) 
+        st.markdown("""
+        <div class="slide-container" style="text-align: center;">
+            <h2 style='color: #4DA8DA;'>About the Researcher</h2>
+            <hr style="border-color: rgba(255,255,255,0.1);">
             
-            st.markdown("""
-            <div style='text-align: center; font-size: 16px; margin-top: 15px;'>
+            <img src="profile.jpg" width="150" style="border-radius: 50%; margin: 20px 0px;">
+            
+            <p style='font-size: 16px; margin-bottom: 30px;'>
             This interactive project was engineered by an MIT World Peace University (MIT-WPU) Master's candidate specializing in Data Science and Big Data Analytics, exploring the powerful middle ground between advanced data science and biological healthcare.
-            </div>
-            <br>
-            """, unsafe_allow_html=True)
+            </p>
             
-            # Replace the link below with your actual LinkedIn URL
-            st.link_button("View LinkedIn Profile", "www.linkedin.com/in/asita-pathak-a59318209", use_container_width=True)
+            <a href="https://www.linkedin.com/in/asita-pathak-a59318209/" target="_blank" style="display: inline-block; padding: 10px 25px; background-color: #4DA8DA; color: #0E1117; font-weight: bold; text-decoration: none; border-radius: 5px;">View LinkedIn Profile</a>
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # 4. Navigation Buttons (Previous / Next)
+    # 3. Navigation Buttons (Previous / Next)
     col1, col2, col3 = st.columns([1, 8, 1])
     with col1:
         st.button("⬅️ Prev", on_click=prev_slide, disabled=(st.session_state.slide_index == 0))

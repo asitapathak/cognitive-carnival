@@ -19,32 +19,25 @@ page = st.sidebar.radio(
      "The Interactive Biological Engine (All Angles)")
 )
 # --- GLOBAL CSS OVERRIDE (APPLIES TO ALL PAGES) ---
+# --- GLOBAL CSS OVERRIDE (APPLIES TO ALL PAGES) ---
 st.markdown(
     """
     <style>
-    /* Base background color for the app */
-    .stApp {
-        background-color: #0E1117; 
-    }
-    /* Faded Background Image */
-    .stApp::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        
-        /* Put your high-resolution image URL here */
-        background-image: url("https://images.unsplash.com/photo-1559757175-5700dde675bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80");
-        
-        /* These settings force it to fit the screen without repeating or pixelating */
+    /* Faded Background Image using CSS Gradient Blending */
+    /* This paints a 90% dark overlay directly on top of the image to give it exactly 10% opacity */
+    [data-testid="stAppViewContainer"] {
+        background-image: linear-gradient(rgba(14, 17, 23, 0.90), rgba(14, 17, 23, 0.90)), 
+                          url("https://images.unsplash.com/photo-1559757175-5700dde675bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
-        background-repeat: no-repeat;
-        
-        /* This makes the image exactly 10% visible (very faded and light) */
-        opacity: 0.10; 
-        z-index: -1;
     }
+    
+    /* Ensures the sidebar remains perfectly dark and readable */
+    [data-testid="stSidebar"] {
+        background-color: #0E1117;
+    }
+
     /* Custom slide container styling */
     .slide-container {
         background-color: rgba(30, 34, 43, 0.7);
@@ -106,12 +99,12 @@ if page == "Welcome & Overview":
             <hr style="border-color: rgba(255,255,255,0.1);">
             <div style='font-size: 18px; line-height: 1.8;'>
             Before we analyze the brain, here is exactly what our scientific variables mean in plain English:<br><br>
-             🧠 <b style='color: #A2D5F2;'>Fluid Intelligence (PMAT24):</b> The ultimate logic and problem-solving score. This is the "brain power" we are trying to predict.<br>
-             💤 <b style='color: #FF6B6B;'>The Sleep Penalty (PSQI):</b> A measure of sleep deprivation. A high score indicates toxic, poor-quality sleep.<br>
-             ❤️ <b style='color: #FF8E8B;'>Emotional Intelligence (ER40):</b> The subject's ability to accurately read and process human emotions.<br>
-             💾 <b style='color: #A2D5F2;'>Working Memory (PicSeq):</b> The brain's raw hardware capacity to store and recall visual information.<br>
-             🎯 <b style='color: #A2D5F2;'>Pure Focus (Flanker):</b> The biological ability to maintain strict attention and ignore outside distractions.<br>
-             🧘 <b style='color: #6BCB77;'>Stress-Free Metric (LifeSatisf):</b> Overall life satisfaction, used as a baseline indicator of a low-stress, low-cortisol environment.
+             🧠 <b style='color: #A2D5F2;'>Fluid Intelligence (PMAT24):</i> The ultimate logic and problem-solving score. This is the "brain power" we are trying to predict.<br>
+             💤 <b style='color: #FF6B6B;'>The Sleep Penalty (PSQI):</i> A measure of sleep deprivation. A high score indicates toxic, poor-quality sleep.<br>
+             ❤️ <b style='color: #FF8E8B;'>Emotional Intelligence (ER40):</i> The subject's ability to accurately read and process human emotions.<br>
+             💾 <b style='color: #A2D5F2;'>Working Memory (PicSeq):</i> The brain's raw hardware capacity to store and recall visual information.<br>
+             🎯 <b style='color: #A2D5F2;'>Pure Focus (Flanker):</i> The biological ability to maintain strict attention and ignore outside distractions.<br>
+             🧘 <b style='color: #6BCB77;'>Stress-Free Metric (LifeSatisf):</i> Overall life satisfaction, used as a baseline indicator of a low-stress, low-cortisol environment.
             </div>
         </div>
         """, unsafe_allow_html=True)

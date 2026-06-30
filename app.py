@@ -24,7 +24,7 @@ st.markdown(
     <style>
     .stApp {
         /* Direct link to a dotted neural network brain image */
-        background-image: url("https://images.unsplash.com/photo-1559757175-5700dde675bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80");
+        background-image: url("https://t4.ftcdn.net/jpg/04/30/43/27/360_F_430432733_8Bx9ZSqRWXurfGIRlpBHgL1b1mk2D86C.jpg");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -123,18 +123,18 @@ if page == "Welcome & Overview":
 
     elif st.session_state.slide_index == 4:
         st.markdown("""
-        <div class="slide-container" style="text-align: center;">
-            <h2 style='color: #4DA8DA;'>About the Researcher</h2>
-            <hr style="border-color: rgba(255,255,255,0.1);">
-            
-            <img src="profile.jpg" width="150" style="border-radius: 50%; margin: 20px 0px;">
-            
-            <p style='font-size: 16px; margin-bottom: 30px;'>
-            This interactive project was engineered by an MIT World Peace University (MIT-WPU) Master's candidate specializing in Data Science and Big Data Analytics, exploring the powerful middle ground between advanced data science and biological healthcare.
-            </p>
-            
-            <a href="https://www.linkedin.com/in/asita-pathak-a59318209/" target="_blank" style="display: inline-block; padding: 10px 25px; background-color: #4DA8DA; color: #0E1117; font-weight: bold; text-decoration: none; border-radius: 5px;">View LinkedIn Profile</a>
-        </div>
+<div class="slide-container" style="text-align: center;">
+    <h2 style='color: #4DA8DA;'>About the Researcher</h2>
+    <hr style="border-color: rgba(255,255,255,0.1);">
+    
+    <img src="profile.jpg" width="150" style="border-radius: 50%; margin: 20px 0px;">
+    
+    <p style='font-size: 16px; margin-bottom: 30px;'>
+    This interactive project was engineered by an MIT World Peace University (MIT-WPU) Master's candidate specializing in Data Science and Big Data Analytics, exploring the powerful middle ground between advanced data science and biological healthcare.
+    </p>
+    
+    <a href="https://www.linkedin.com/in/asita-pathak-a59318209/" target="_blank" style="display: inline-block; padding: 10px 25px; background-color: #4DA8DA; color: #0E1117; font-weight: bold; text-decoration: none; border-radius: 5px;">View LinkedIn Profile</a>
+</div>
         """, unsafe_allow_html=True)
 
     # 3. Navigation Buttons (Previous / Next)

@@ -67,7 +67,7 @@ if page == "Welcome & Overview":
         st.session_state.slide_index = 0
 
     def next_slide():
-        if st.session_state.slide_index < 4:
+        if st.session_state.slide_index < 3:
             st.session_state.slide_index += 1
 
     def prev_slide():
@@ -130,14 +130,12 @@ if page == "Welcome & Overview":
         </div>
         """, unsafe_allow_html=True)
 
-
-
     # 3. Navigation Buttons (Previous / Next)
     col1, col2, col3 = st.columns([1, 8, 1])
     with col1:
         st.button("⬅️ Prev", on_click=prev_slide, disabled=(st.session_state.slide_index == 0))
     with col3:
-        st.button("Next ➡️", on_click=next_slide, disabled=(st.session_state.slide_index == 4))
+        st.button("Next ➡️", on_click=next_slide, disabled=(st.session_state.slide_index == 3))
 if page == "The Grand Synthesis":
     st.title("The Grand Synthesis: The Hierarchy of Human Intelligence")
     st.markdown("### Executive Summary")

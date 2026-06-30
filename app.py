@@ -9,7 +9,7 @@ st.set_page_config(page_title="Cognitive Intelligence Portfolio", layout="wide",
 st.sidebar.title("🧠 The Biological Engines of Intelligence")
 st.sidebar.markdown("Navigate through the findings of the cognitive data analysis project.")
 
-phase = st.sidebar.radio(
+page = st.sidebar.radio(
     "Select Analysis Phase:",
     ("Welcome & Overview",  # <--- THIS IS THE NEW LINE
      "The Grand Synthesis", 
@@ -19,7 +19,7 @@ phase = st.sidebar.radio(
      "The Interactive Biological Engine (All Angles)")
 )
 # --- 3. PAGE: THE GRAND SYNTHESIS ---
-if phase == "Welcome & Overview":
+if page == "Welcome & Overview":
     # 1. CSS Injection for the Faded Brain Watermark Background
     st.markdown(
         """

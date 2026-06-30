@@ -26,7 +26,7 @@ if page == "Welcome & Overview":
         <style>
         .stApp {
             /* Using a high-quality abstract neural network image */
-            background-image: url("https://images.unsplash.com/photo-1559757175-5700dde675bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80");
+            background-image: url("https://stock.adobe.com/search?k=brain+dot");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -94,12 +94,12 @@ if page == "Welcome & Overview":
         st.markdown("""
         <div style='font-size: 18px; line-height: 1.8;'>
         Before we analyze the brain, here is exactly what our scientific variables mean in plain English:<br><br>
-        🧠 <b style='color: #A2D5F2;'>Fluid Intelligence (PMAT24):</b> The ultimate logic and problem-solving score. This is the "brain power" we are trying to predict.<br>
-        💤 <b style='color: #FF6B6B;'>The Sleep Penalty (PSQI):</b> A measure of sleep deprivation. A high score indicates toxic, poor-quality sleep.<br>
-        ❤️ <b style='color: #FF8E8B;'>Emotional Intelligence (ER40):</b> The subject's ability to accurately read and process human emotions.<br>
-        💾 <b style='color: #A2D5F2;'>Working Memory (PicSeq):</b> The brain's raw hardware capacity to store and recall visual information.<br>
-        🎯 <b style='color: #A2D5F2;'>Pure Focus (Flanker):</b> The biological ability to maintain strict attention and ignore outside distractions.<br>
-        🧘 <b style='color: #6BCB77;'>Stress-Free Metric (LifeSatisf):</b> Overall life satisfaction, used as a baseline indicator of a low-stress, low-cortisol environment.
+         <b style='color: #A2D5F2;'>Fluid Intelligence (PMAT24):</b> The ultimate logic and problem-solving score. This is the "brain power" we are trying to predict.<br>
+         <b style='color: #FF6B6B;'>The Sleep Penalty (PSQI):</b> A measure of sleep deprivation. A high score indicates toxic, poor-quality sleep.<br>
+         <b style='color: #FF8E8B;'>Emotional Intelligence (ER40):</b> The subject's ability to accurately read and process human emotions.<br>
+         <b style='color: #A2D5F2;'>Working Memory (PicSeq):</b> The brain's raw hardware capacity to store and recall visual information.<br>
+         <b style='color: #A2D5F2;'>Pure Focus (Flanker):</b> The biological ability to maintain strict attention and ignore outside distractions.<br>
+         <b style='color: #6BCB77;'>Stress-Free Metric (LifeSatisf):</b> Overall life satisfaction, used as a baseline indicator of a low-stress, low-cortisol environment.
         </div>
         """, unsafe_allow_html=True)
 

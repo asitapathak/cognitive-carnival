@@ -27,7 +27,7 @@ st.markdown(
     /* This paints a 90% dark overlay directly on top of the image to give it exactly 10% opacity */
     [data-testid="stAppViewContainer"] {
         background-image: linear-gradient(rgba(14, 17, 23, 0.90), rgba(14, 17, 23, 0.90)), 
-                          url("https://images.unsplash.com/photo-1559757175-5700dde675bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80");
+                          url("https://t4.ftcdn.net/jpg/04/30/43/27/360_F_430432733_8Bx9ZSqRWXurfGIRlpBHgL1b1mk2D86C.jpg");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -99,12 +99,12 @@ if page == "Welcome & Overview":
             <hr style="border-color: rgba(255,255,255,0.1);">
             <div style='font-size: 18px; line-height: 1.8;'>
             Before we analyze the brain, here is exactly what our scientific variables mean in plain English:<br><br>
-             🧠 <b style='color: #A2D5F2;'>Fluid Intelligence (PMAT24):</i> The ultimate logic and problem-solving score. This is the "brain power" we are trying to predict.<br>
-             💤 <b style='color: #FF6B6B;'>The Sleep Penalty (PSQI):</i> A measure of sleep deprivation. A high score indicates toxic, poor-quality sleep.<br>
-             ❤️ <b style='color: #FF8E8B;'>Emotional Intelligence (ER40):</i> The subject's ability to accurately read and process human emotions.<br>
-             💾 <b style='color: #A2D5F2;'>Working Memory (PicSeq):</i> The brain's raw hardware capacity to store and recall visual information.<br>
-             🎯 <b style='color: #A2D5F2;'>Pure Focus (Flanker):</i> The biological ability to maintain strict attention and ignore outside distractions.<br>
-             🧘 <b style='color: #6BCB77;'>Stress-Free Metric (LifeSatisf):</i> Overall life satisfaction, used as a baseline indicator of a low-stress, low-cortisol environment.
+             🧠 <b style='color: #A2D5F2;'>Fluid Intelligence (PMAT24):</b> <i style='color: white;'>The ultimate logic and problem-solving score. This is the "brain power" we are trying to predict.</i><br>
+             💤 <b style='color: #FF6B6B;'>The Sleep Penalty (PSQI):</b> <i style='color: white;'>A measure of sleep deprivation. A high score indicates toxic, poor-quality sleep.</i><br>
+             ❤️ <b style='color: #FF8E8B;'>Emotional Intelligence (ER40):</b> <i style='color: white;'>The subject's ability to accurately read and process human emotions.</i><br>
+             💾 <b style='color: #A2D5F2;'>Working Memory (PicSeq):</b> <i style='color: white;'>The brain's raw hardware capacity to store and recall visual information.</i><br>
+             🎯 <b style='color: #A2D5F2;'>Pure Focus (Flanker):</b> <i style='color: white;'>The biological ability to maintain strict attention and ignore outside distractions.</i><br>
+             🧘 <b style='color: #6BCB77;'>Stress-Free Metric (LifeSatisf):</b> <i style='color: white;'>Overall life satisfaction, used as a baseline indicator of a low-stress, low-cortisol environment.</i>
             </div>
         </div>
         """, unsafe_allow_html=True)

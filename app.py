@@ -54,7 +54,7 @@ reg, rf, report, df = run_models(df)
 st.set_page_config(page_title="Cognitive Intelligence Portfolio", layout="wide", initial_sidebar_state="expanded")
 
 # --- 2. SIDEBAR NAVIGATION ---
-st.sidebar.title("🧠 The Biological Engines of Intelligence")
+st.sidebar.title("Cognitive Performance & Wellness Analytics")
 st.sidebar.markdown("Navigate through the findings of the cognitive data analysis project.")
 
 page = st.sidebar.radio(
@@ -62,9 +62,9 @@ page = st.sidebar.radio(
 ("Welcome & Overview",
  "Business Overview (KPIs)",
  "Segments & Actions",
+ "Segment Explorer",
  "What Drives Performance",
- "Recommendations & Limitations",
- "The Interactive Biological Engine (All Angles)")
+ "Recommendations & Limitations",)
 )
 
 # --- GLOBAL CSS OVERRIDE (APPLIES TO ALL PAGES) ---
@@ -180,7 +180,7 @@ if page == "Welcome & Overview":
             <div style='font-size: 18px; line-height: 1.6;'>
             This project uses three distinct machine learning algorithms to uncover different layers of human performance:<br><br>
             <b>1. Finding the Baseline</b> <i><span style='color: #888;'>(Multiple Linear Regression)</span></i>: We first looked at the entire population to find out which biological traits drive our average, everyday problem-solving skills.<br><br>
-            <b>2. Discovering Hidden Tribes</b> <i><span style='color: #888;'>(K-Means Clustering)</span></i>: We used an unsupervised algorithm to group subjects based purely on their biological similarities. This revealed a fascinating "Burnout Override" group.<br><br>
+            <b>2. Discovering Hidden Tribes</b> <i><span style='color: #888;'>(K-Means Clustering)</span></i>: We used an unsupervised algorithm to group subjects based purely on their biological similarities. This revealed a fascinating "Burnout-Risk segment" group.<br><br>
             <b>3. Sorting the Elite</b> <i><span style='color: #888;'>(Random Forest Classification)</span></i>: Finally, we isolated the top 20% of the smartest individuals to figure out the exact biological bottleneck required to reach genius-level logic.
             </div>
         </div>
@@ -272,52 +272,29 @@ elif page == "What Drives Performance":
 
     st.info("**Takeaway:** Memory is the strongest lever, emotion recognition and life satisfaction help, and sleep problems pull scores down. These factors explain only part of logic scores, so use them to spot patterns, not to judge individuals.")
 
-# --- 6. NEW PAGE: INTERACTIVE BIOLOGICAL ENGINE ---
-elif page == "The Interactive Biological Engine (All Angles)":
-    st.title("⚙️ The Interactive Biological Engine")
-    st.markdown("Explore how the brain's reliance on different cognitive tools shifts depending on the environment and the required task.")
-    
-    # Interactive Selector
-   # --- START OF REPLACEMENT CODE ---
-    
-    # Interactive Selector (Fixed and Stabilized)
-    cognitive_state = st.radio(
-        "**Select the Cognitive State to Analyze:**",
-        options=["The Burnout State (Angle 2)", "The Everyday Baseline (Angle 1)", "The Elite State (Angle 3)"],
-        horizontal=True
-    )
-    
-    st.divider()
-    
-    # Engine Output Panels
-    if cognitive_state == "The Everyday Baseline (Angle 1)":
-        st.subheader("State: The Everyday Baseline")
-        st.markdown("*Represented by the Multiple Linear Regression Model.*")
-        st.info("**Biological Reality:** To survive average daily logic puzzles, the brain relies on its social operating system. Emotional intelligence handles the heavy lifting, while basic sleep ensures the system doesn't crash. Raw memory capacity takes a back seat.")
-        
-        st.markdown("#### Active Biological Engines:")
-        st.progress(80, text="🟢 Emotional Processing Engine (80% Power)")
-        st.progress(60, text="🟢 Basic Rest & Maintenance (60% Power)")
-        st.progress(20, text="⚪ Working Memory Hardware (20% Power)")
-        
-    elif cognitive_state == "The Burnout State (Angle 2)":
-        st.subheader("State: The Burnout Override")
-        st.markdown("*Represented by Tribe 1 in the K-Means Clustering Model.*")
-        st.error("**Biological Reality:** The subject has superior working memory and focus hardware, but toxic sleep deprivation (PSQI = 9.2) has triggered a system override. The brain physically cannot access its own hardware, causing logic scores to crash below average levels.")
-        
-        st.markdown("#### Active Biological Engines:")
-        st.progress(95, text="🔴 Sleep Deprivation Toxin Level (CRITICAL OVERRIDE)")
-        st.progress(10, text="🔴 Accessible Logic Output (10% Power)")
-        st.progress(85, text="⚪ Blocked Memory Hardware (Offline due to fatigue)")
+# --- 6 segment explorer---
+elif page == "Segment Explorer":
+    st.title("Segment Explorer")
+    st.markdown("Pick a segment to see how it compares with everyone else.")
 
-    elif cognitive_state == "The Elite State (Angle 3)":
-        st.subheader("State: The Elite Bottleneck")
-        st.markdown("*Represented by the Random Forest Classification Model.*")
-        st.success("**Biological Reality:** To solve the most complex 20% of logic puzzles, the brain requires massive, undisturbed hardware. Working Memory and a completely stress-free mind (Life Satisfaction) ignite at maximum power, pushing the brain to its absolute limits.")
-        
-        st.markdown("#### Active Biological Engines:")
-        st.progress(95, text="🟢 Working Memory Hardware (95% Maximum Capacity)")
-        st.progress(85, text="🟢 Stress-Free Environment Engine (85% Power)")
-        st.progress(25, text="⚪ Basic Emotional Processing (25% Background Power)")
-        
-    
+    segment = st.radio("Select a segment:",
+                       ["High Performers", "Low-Focus Average", "Burnout-Risk"],
+                       horizontal=True)
+    st.divider()
+
+    cols = {"PMAT24_A_CR": "Logic Score", "PicSeq_AgeAdj": "Memory",
+            "Flanker_AgeAdj": "Focus", "ER40_CR": "Emotion Recognition",
+            "PSQI_Score": "Sleep Problems"}
+    chosen = df[df["segment"] == segment][list(cols)].mean()
+    overall = df[list(cols)].mean()
+
+    st.metric("People in this segment", int((df["segment"] == segment).sum()))
+
+    diff = ((chosen - overall) / overall * 100).round(1)
+    diff.index = list(cols.values())
+    st.subheader("% difference from the overall average")
+    st.bar_chart(diff)
+    st.caption("Sleep Problems: higher is worse.")
+
+    table = pd.DataFrame({segment: chosen.round(1), "Overall average": overall.round(1)})
+    st.dataframe(table.set_axis(list(cols.values()), axis=0))

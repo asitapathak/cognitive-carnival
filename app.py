@@ -222,7 +222,7 @@ elif page == "Angle 1: The Everyday Brain (Regression)":
     st.bar_chart(df_reg['Mathematical Weight'])
 
 # --- 5. PAGE: ANGLE 2 (segments and actions) ---
-elif page == "Segments & Actions":
+elif page == "Angle 2: Segments & Actions":
     st.title("Performance Segments and Recommended Actions")
     st.markdown("K-Means grouped people into three segments using memory, focus, emotion recognition and sleep.")
 

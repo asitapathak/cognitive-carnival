@@ -56,7 +56,8 @@ st.sidebar.markdown("Navigate through the findings of the cognitive data analysi
 
 page = st.sidebar.radio(
     "Select Analysis Phase:",
-    ("Welcome & Overview",  # <--- THIS IS THE NEW LINE
+    ("Business Overview (KPIs)",
+     "Welcome & Overview",  # <--- THIS IS THE NEW LINE
      "The Grand Synthesis", 
      "Angle 1: The Everyday Brain (Regression)",
      "Angle 2: The Biological Override (Clustering)",
@@ -95,6 +96,20 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+if page == "Business Overview (KPIs)":
+    st.title("Cognitive Performance & Wellness Analytics")
+    st.markdown("Which performance profiles are at risk, and which levers matter most?")
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Avg Logic Score", round(df["PMAT24_A_CR"].mean(), 1))
+    c2.metric("High Performers", f"{df['top'].mean():.0%}")
+    c3.metric("Burnout-Risk Segment", f"{(df['segment'] == 'Burnout-Risk').mean():.0%}")
+    c4.metric("Avg Sleep Problem Score", round(df["PSQI_Score"].mean(), 1))
+    st.caption("High performer = logic score at or above the 80th percentile. Sleep problem score: lower is better.")
+
+    st.subheader("Workforce split by segment")
+    st.bar_chart(df["segment"].value_counts())
 
 # --- 3. PAGE: THE GRAND SYNTHESIS ---
 # --- 3. PAGE: WELCOME & OVERVIEW ---

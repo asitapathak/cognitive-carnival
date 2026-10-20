@@ -2,7 +2,10 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import StratifiedKFold, cross_val_score, cross_val_predict
+from sklearn.metrics import recall_score, precision_score
 from sklearn.cluster import KMeans
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
@@ -55,15 +58,15 @@ st.sidebar.title("🧠 The Biological Engines of Intelligence")
 st.sidebar.markdown("Navigate through the findings of the cognitive data analysis project.")
 
 page = st.sidebar.radio(
-    "Select Analysis Phase:",
-    ("Business Overview (KPIs)",
-     "Welcome & Overview",  # <--- THIS IS THE NEW LINE
-     "The Grand Synthesis", 
-     "Angle 1: The Everyday Brain (Regression)",
-     "Angle 2: Segments & Actions",
-     "Angle 3: The Elite Bottleneck (Classification)",
-     "The Interactive Biological Engine (All Angles)")
+"Select Analysis Phase:",
+("Welcome & Overview",
+ "Business Overview (KPIs)",
+ "Segments & Actions",
+ "What Drives Performance",
+ "Recommendations & Limitations",
+ "The Interactive Biological Engine (All Angles)")
 )
+
 # --- GLOBAL CSS OVERRIDE (APPLIES TO ALL PAGES) ---
 # --- GLOBAL CSS OVERRIDE (APPLIES TO ALL PAGES) ---
 st.markdown(
@@ -189,40 +192,29 @@ if page == "Welcome & Overview":
         st.button("⬅️ Prev", on_click=prev_slide, disabled=(st.session_state.slide_index == 0))
     with col3:
         st.button("Next ➡️", on_click=next_slide, disabled=(st.session_state.slide_index == 3))
-if page == "The Grand Synthesis":
-    st.title("The Grand Synthesis: The Hierarchy of Human Intelligence")
-    st.markdown("### Executive Summary")
-    st.success("**Human intelligence operates on a strict biological hierarchy: good sleep is the non-negotiable baseline that prevents your brain from crashing, emotional awareness is the daily engine that powers everyday problem-solving, but to break into the absolute elite tier of cognitive performance, you must possess massive working memory hardware and a completely stress-free mind.**")
-    
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.info("**Level 1: The Foundation**\n\nChronic sleep deprivation acts as a total biological override, neutralizing even superior cognitive hardware.")
-    with col2:
-        st.info("**Level 2: The Daily Driver**\n\nFor average daily problem-solving, emotional awareness serves as the brain's primary operating system.")
-    with col3:
-        st.info("**Level 3: The Elite Tier**\n\nBreaking into the top 20% of logic performers requires raw working memory capacity and an absence of stress.")
+if page == "Recommendations & Limitations":
+    st.title("Recommendations & Limitations")
 
-# --- 4. PAGE: ANGLE 1 (REGRESSION) ---
-elif page == "Angle 1: The Everyday Brain (Regression)":
-    st.title("Angle 1: Predicting Baseline Logic")
-    st.markdown("A Multiple Linear Regression model engineered to predict general fluid intelligence for the average population.")
-    
-    st.metric(label="Model Predictive Power (R-Squared)", value="11.0%")
-    
-    st.markdown("### The Biological Driver")
-    st.markdown("For the average person on an average day, **Emotional Intelligence** is the strongest linear driver of problem-solving ability, while **Sleep Trouble** serves as the heaviest biological penalty.")
-    
-    # Exact hardcoded results from the Jupyter Notebook
-    reg_data = {
-        'Feature': ['ER40_CR (Emotion)', 'PicSeq_AgeAdj (Memory)', 'Flanker_AgeAdj (Focus)', 'PSQI_Score (Sleep Penalty)'],
-        'Mathematical Weight': [0.38, 0.08, 0.02, -0.18]
-    }
-    df_reg = pd.DataFrame(reg_data).set_index('Feature')
-    
-    st.bar_chart(df_reg['Mathematical Weight'])
+    poor = df["PSQI_Score"] > 5
+    mem_top = df["PicSeq_AgeAdj"] >= df["PicSeq_AgeAdj"].quantile(0.75)
+    mem_low = df["PicSeq_AgeAdj"] <= df["PicSeq_AgeAdj"].quantile(0.25)
+    burnout_share = (df["segment"] == "Burnout-Risk").mean()
 
-# --- 5. PAGE: ANGLE 2 (segments and actions) ---
-elif page == "Angle 2: Segments & Actions":
+    st.subheader("What the data supports")
+    st.success(f"**1. Make sleep support a priority.** {poor.mean():.0%} of people score above 5 on the sleep problems scale, a common cut-off for poor sleep. Only {df[poor]['top'].mean():.0%} of them are high performers, against {df[~poor]['top'].mean():.0%} of everyone else.")
+    st.success(f"**2. Invest in memory and focus training.** {df[mem_top]['top'].mean():.0%} of people in the top quarter for memory are high performers, against {df[mem_low]['top'].mean():.0%} in the bottom quarter.")
+    st.success(f"**3. Target support by segment.** {burnout_share:.0%} of people fall in the Burnout-Risk segment. Start sleep and workload support there (see Segments & Actions).")
+
+    st.subheader("Limitations")
+    st.warning("""
+- This is correlation, not proof of cause and effect.
+- The data is from healthy adults in the Human Connectome Project, not employees. It is used here as a stand-in for a workforce.
+- The models explain only part of logic scores (see What Drives Performance).
+- Logic score is one measure of performance, not the whole picture.
+""")
+
+# --- 4. PAGE:segments and actions---
+elif page == "Segments & Actions":
     st.title("Performance Segments and Recommended Actions")
     st.markdown("K-Means grouped people into three segments using memory, focus, emotion recognition and sleep.")
 
@@ -243,29 +235,44 @@ elif page == "Angle 2: Segments & Actions":
 
     st.subheader("Recommended actions")
     st.error("**Burnout-Risk:** Sleep problems stand out in this group. Make it the priority for sleep and workload support, such as flexible hours and a wellness programme.")
-    st.info("**Low-Focus Average:** Sleep is fine, but focus is the lowest of the three. Try focus training and fewer interruptions.")
+    st.info("**Low-Focus Average:** Sleep is fine, but memory and focus are the lowest of the three groups. Try focus training and fewer interruptions.")
     st.success("**High Performers:** Strong memory and focus with healthy sleep. Protect their workload and use them as mentors on complex tasks.")
 
-# --- 6. PAGE: ANGLE 3 (CLASSIFICATION) ---
-elif page == "Angle 3: The Elite Bottleneck (Classification)":
-    st.title("Angle 3: Sorting the Top 20% Geniuses")
-    st.markdown("A Random Forest classifier engineered to identify only the absolute elite problem solvers.")
-    
-    st.metric(label="Overall Sorting Accuracy", value="61.1%")
-    
-    st.markdown("### The Elite Gatekeepers")
-    st.markdown("When isolating the elite, the brain's priorities completely flip. The algorithm mathematically relies on **Working Memory** (raw hardware capacity) and **Life Satisfaction** (absence of stress) to identify top-tier geniuses.")
-    
-    # Exact hardcoded results from the Jupyter Notebook
-    class_data = {
-        'Feature': ['PicSeq_AgeAdj (Memory)', 'LifeSatisf_Unadj (Stress Free)', 'Flanker_AgeAdj (Focus)', 'ER40_CR (Emotion)', 'PSQI_Score (Sleep)'],
-        'Decision Importance (%)': [33.1, 21.0, 19.1, 17.3, 9.5]
-    }
-    df_class = pd.DataFrame(class_data).set_index('Feature')
-    
-    st.bar_chart(df_class['Decision Importance (%)'])
 
-# --- 7. NEW PAGE: INTERACTIVE BIOLOGICAL ENGINE ---
+# --- 5. PAGE: what drives performance ---
+elif page == "What Drives Performance":
+    st.title("What Drives Performance")
+    st.markdown("Two views: what moves the average logic score, and what separates high performers.")
+
+    st.subheader("1. Average logic score (regression)")
+    X_scaled = StandardScaler().fit_transform(df[features])
+    reg_model = LinearRegression().fit(X_scaled, df["PMAT24_A_CR"])
+    st.metric("R-squared", f"{reg_model.score(X_scaled, df['PMAT24_A_CR']):.1%}")
+    weights = pd.Series(reg_model.coef_, index=["Emotion", "Memory", "Focus", "Sleep Problems"])
+    st.bar_chart(weights)
+    st.caption("Weights are standardized, so bars are directly comparable. Negative means lower logic scores.")
+
+    st.subheader("2. High performers (classification)")
+    cols = features + ["LifeSatisf_Unadj"]
+    model = make_pipeline(StandardScaler(), LogisticRegression(class_weight="balanced", max_iter=1000))
+    cv = StratifiedKFold(5, shuffle=True, random_state=42)
+    auc = cross_val_score(model, df[cols], df["top"], cv=cv, scoring="roc_auc").mean()
+    pred = cross_val_predict(model, df[cols], df["top"], cv=cv)
+
+    c1, c2, c3 = st.columns(3)
+    c1.metric("AUC (0.5 = random guess)", f"{auc:.2f}")
+    c2.metric("Recall", f"{recall_score(df['top'], pred):.0%}")
+    c3.metric("Precision", f"{precision_score(df['top'], pred):.0%}")
+
+    model.fit(df[cols], df["top"])
+    importance = pd.Series(model[-1].coef_[0],
+                           index=["Emotion", "Memory", "Focus", "Sleep Problems", "Life Satisfaction"])
+    st.bar_chart(importance)
+    st.caption("Recall = share of real high performers caught. Precision = share of the model's picks that are right. All scores are 5-fold cross-validated.")
+
+    st.info("**Takeaway:** Memory is the strongest lever, emotion recognition and life satisfaction help, and sleep problems pull scores down. These factors explain only part of logic scores, so use them to spot patterns, not to judge individuals.")
+
+# --- 6. NEW PAGE: INTERACTIVE BIOLOGICAL ENGINE ---
 elif page == "The Interactive Biological Engine (All Angles)":
     st.title("⚙️ The Interactive Biological Engine")
     st.markdown("Explore how the brain's reliance on different cognitive tools shifts depending on the environment and the required task.")

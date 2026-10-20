@@ -2,6 +2,51 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
+from sklearn.linear_model import LinearRegression
+from sklearn.cluster import KMeans
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+
+features = ["ER40_CR", "PicSeq_AgeAdj", "Flanker_AgeAdj", "PSQI_Score"]
+
+@st.cache_data
+def load_data():
+    df = pd.read_csv("dataset.csv")
+    return df.dropna(subset=features + ["PMAT24_A_CR", "LifeSatisf_Unadj"])
+
+@st.cache_data
+def run_models(df):
+    df = df.copy()
+
+    # regression
+    reg = LinearRegression().fit(df[features], df["PMAT24_A_CR"])
+
+    # clustering into segments
+    X = StandardScaler().fit_transform(df[features])
+    df["cluster"] = KMeans(n_clusters=3, random_state=42, n_init=10).fit_predict(X)
+    means = df.groupby("cluster")[["PSQI_Score", "PMAT24_A_CR"]].mean()
+    burnout = means["PSQI_Score"].idxmax()
+    high = means["PMAT24_A_CR"].drop(burnout).idxmax()
+    names = {c: "Low-Focus Average" for c in means.index}
+    names[burnout] = "Burnout-Risk"
+    names[high] = "High Performers"
+    df["segment"] = df["cluster"].map(names)
+
+    # random forest for top performers
+    df["top"] = (df["PMAT24_A_CR"] >= df["PMAT24_A_CR"].quantile(0.8)).astype(int)
+    cols = features + ["LifeSatisf_Unadj"]
+    X_train, X_test, y_train, y_test = train_test_split(
+        df[cols], df["top"], test_size=0.2, random_state=42, stratify=df["top"])
+    rf = RandomForestClassifier(random_state=42).fit(X_train, y_train)
+    report = classification_report(y_test, rf.predict(X_test), output_dict=True)
+
+    return reg, rf, report, df
+
+df = load_data()
+reg, rf, report, df = run_models(df)
+
 # --- 1. PAGE SETUP ---
 st.set_page_config(page_title="Cognitive Intelligence Portfolio", layout="wide", initial_sidebar_state="expanded")
 
